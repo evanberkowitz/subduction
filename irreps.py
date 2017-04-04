@@ -2,25 +2,6 @@ import numpy
 import itertools
 from scipy.special import sph_harm
 
-def symmetry_image(vec):
-    # Returns a list of all the vectors related by a group element of the octahedral symmetry group to the passed vector.
-    [x,y,z]=vec
-
-    # Manually implement the whole symmetry group.  There are 48 elements.
-    oH=[ 
-        # /------------ There are eight sign choices for every permutation ------------\
-        [x,y,z], [x,y,-z], [x,-y,z], [x,-y,-z], [-x,y,z], [-x,y,-z], [-x,-y,z], [-x,-y,-z], # \
-        [x,z,y], [x,z,-y], [x,-z,y], [x,-z,-y], [-x,z,y], [-x,z,-y], [-x,-z,y], [-x,-z,-y], # |
-        [y,x,z], [y,x,-z], [y,-x,z], [y,-x,-z], [-y,x,z], [-y,x,-z], [-y,-x,z], [-y,-x,-z], # | and 6 distinct permutations of the entries.
-        [y,z,x], [y,z,-x], [y,-z,x], [y,-z,-x], [-y,z,x], [-y,z,-x], [-y,-z,x], [-y,-z,-x], # |
-        [z,x,y], [z,x,-y], [z,-x,y], [z,-x,-y], [-z,x,y], [-z,x,-y], [-z,-x,y], [-z,-x,-y], # |
-        [z,y,x], [z,y,-x], [z,-y,x], [z,-y,-x], [-z,y,x], [-z,y,-x], [-z,-y,x], [-z,-y,-x]  # /
-    ]
-    
-    # However, some of the above may be redundant.  For example, on [0,0,0] they're all the same.
-    # So, we need to get rid of the duplicates.
-    oH.sort()
-    return list( vec for vec,_ in itertools.groupby(oH))
 
 
 def nsq(ns):
