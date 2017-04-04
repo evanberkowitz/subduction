@@ -192,5 +192,6 @@ inverted_corners = symmetry.Class("8S_6",
 group = symmetry.Group("O_H",
     [
         identity, corners, edges, face_180, face_090, inversion, axis_reflection, diagonal_reflection, inverted_edges, inverted_corners
-    ]
+    ],
+    { "A1g": 1, "A2g": 1, "Eg": 2, "T1g": 3, "T2g": 3, "A1u": 1, "A2u": 1, "Eu": 2, "T1u":3 , "T2u":3 }
 )

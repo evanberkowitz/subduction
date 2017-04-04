@@ -1,5 +1,7 @@
+from __future__ import print_function
 import itertools
 import numpy
+import n_squared
 
 PRECISION=14 # numpy craps out at 16
 
@@ -14,6 +16,9 @@ def union(lst):
 class Operation:
     def on(self, vec):
         return vec
+    
+    def representation(self, nsq_vecs):
+        return numpy.array([ [ (numpy.array(self.on(i)) == numpy.array(j)).all() for j in nsq_vecs ] for i in nsq_vecs]).astype(int)
     
     def __init__(self):
         pass
@@ -72,7 +77,7 @@ class Reflection(Operation):
         self.axes=mask
         
     def on(self, vec):
-        return numpy.array([ precision(sign*component) for sign,component in zip(self.axes,vec) ])
+        return [ precision(sign*component) for sign,component in zip(self.axes,vec) ]
     
     def __str__(self):
         return "reflection given by "+str(self.axes)
@@ -89,11 +94,20 @@ class Class:
         self.characters=characters
     
     def on(self, vec):
-        return union([ precision(numpy.dot(op, vec)) for op in self.ops ])
+        return union([ precision(op.on(vec)) for op in self.ops ])
         
-    def character(irrep):
+    def character(self, irrep):
         return self.characters[irrep]
         
+    def character_nsq(self, nsq_vecs):
+        candidates = [ numpy.sum([ 1 for vec in nsq_vecs if (op.on(vec) == precision(numpy.array(vec))).all() ]) for op in self.ops ]
+        if (candidates == candidates[0]).all():
+            return candidates[0]
+        else:
+            print("Uh-oh")
+            return 0
+    
+    
     def __len__(self):
         return len(self.ops)
     
@@ -101,15 +115,30 @@ class Class:
         return "Symmetry class "+self.name+", with "+str(len(self.ops))+" operations."
         
 class Group:
-    def __init__(self, name=None, classes=None):
+    def __init__(self, name=None, classes=None, irreps=None):
         if name is None or classes is None:
             name="Identity"
             classes=[]
         self.name=name
         self.classes=classes
+        self.irreps=irreps
     
     def on(self, vec):
         return union([ op.on(vec) for c in self.classes for op in c.ops ])
+        
+    def nsq_degeneracy(self, irrep, nsq_vec):
+        # return { c.name:c.character_nsq(self.on(nsq_vec)) for c in self.classes }
+        if not( irrep in self.irreps.keys() ):
+            return 0;
+        return numpy.sum([ len(c) * c.character(irrep) * c.character_nsq(self.on(nsq_vec)) for c in self.classes ]) / len(self)
+
+    def nsq_projector(self, irrep, nsq_vec):
+        if not( irrep in self.irreps.keys() ):
+            return 0;
+        image = self.on(nsq_vec)
+        return numpy.sum(numpy.array([ 1.0 / len(self) * c.character(irrep) * R.representation(image) for c in self.classes for R in c.ops ]) , axis=0)
+
+
     
     def __str__(self):
         s=self.name+" --- "+str(len(self))+" operations:\n    "+"\n    ".join(map(str,self.classes))
@@ -117,3 +146,7 @@ class Group:
         
     def __len__(self):
         return reduce(numpy.add, map(len, self.classes))
+        
+# class Representation:
+#     def __init__(self, group, irrep, nsq):
+#
