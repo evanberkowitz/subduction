@@ -154,5 +154,5 @@ class Group:
         return s
         
     def __len__(self):
-        return reduce(numpy.add, map(len, self.classes))
+        return numpy.sum([len(c) for c in self.classes])
         
