@@ -9,7 +9,6 @@ def precision(lst):
 def union(lst):
     plain = [ [ x for x in sub ] for sub in lst ]
     plain.sort()
-    # return numpy.unique(precision(lst))
     return list( vec for vec,_ in itertools.groupby(plain))    
 
 class Operation:
