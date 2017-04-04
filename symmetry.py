@@ -80,16 +80,20 @@ class Reflection(Operation):
 
 
 class Class:
-    def __init__(self, name=None, ops=None, desc=None):
+    def __init__(self, name=None, ops=None, characters=None, desc=None):
         if ops is None:
             name="E"
             ops=[ Operation() ]
         self.ops=ops
         self.name=name
         self.long_description=desc
+        self.characters=characters
     
     def on(self, vec):
         return union([ precision(numpy.dot(op, vec)) for op in self.ops ])
+        
+    def character(irrep):
+        return self.characters[irrep]
         
     def __len__(self):
         return len(self.ops)
