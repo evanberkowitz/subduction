@@ -1,6 +1,7 @@
 from __future__ import print_function
 import itertools
 import numpy
+import numpy.linalg
 import n_squared
 
 PRECISION=14 # numpy craps out at 16
@@ -138,7 +139,15 @@ class Group:
         image = self.on(nsq_vec)
         return numpy.sum(numpy.array([ 1.0 / len(self) * c.character(irrep) * R.representation(image) for c in self.classes for R in c.ops ]) , axis=0)
 
-
+    def nsq_states(self, irrep, nsq):
+        primitives = n_squared.vectors(nsq)
+        images     = [ self.on(p) for p in primitives ]
+        projectors = [ self.nsq_projector(irrep, i) for i in primitives ]
+        eig_syss   = [ numpy.linalg.eig(p) for p in projectors ]
+        return eig_syss
+        # evals      = numpy.around(eig_syss[:][0],PRECISION)
+        # evecs      = numpy.around(eig_syss[:][1],PRECISION)
+        # return [evals, evecs]
     
     def __str__(self):
         s=self.name+" --- "+str(len(self))+" operations:\n    "+"\n    ".join(map(str,self.classes))
@@ -147,6 +156,3 @@ class Group:
     def __len__(self):
         return reduce(numpy.add, map(len, self.classes))
         
-# class Representation:
-#     def __init__(self, group, irrep, nsq):
-#
