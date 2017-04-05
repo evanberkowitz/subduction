@@ -10,9 +10,9 @@ print( octahedral.group )
 print("Degeneracy table")
 
 irreps=["A1g", "A2g", "T1g", "T2g", "Eg", "A1u", "A2u", "T1u", "T2u", "Eu"]
-row_format = "{:>5}{:>12}{:>12}" + "{:>5}" * len(irreps)
-print(row_format.format("n^2", "degeneracy", "vector", *irreps))
-[ print(row_format.format(n, len(octahedral.group.on(vec)), str(vec), *[ (lambda d: "" if d==0 else d)(numpy.sum(numpy.array(octahedral.group.nsq_degeneracy(irrep,vec).astype(int)))) for irrep in irreps ])) for n in range(24) if len(n_squared.vectors(n)) is not 0 for vec in n_squared.vectors(n) ]
+row_format = "{:>5}{:>12}{:>12} {:<30}" + "{:>5}" * len(irreps)
+print(row_format.format("n^2", "degeneracy", "vector", "solid", *irreps))
+[ print(row_format.format(n, len(octahedral.group.on(vec)), str(vec), n_squared.shape(vec), *[ (lambda d: "" if d==0 else d)(numpy.sum(numpy.array(octahedral.group.nsq_degeneracy(irrep,vec).astype(int)))) for irrep in irreps ])) for n in range(24) if len(n_squared.vectors(n)) is not 0 for vec in n_squared.vectors(n) ]
 
 
 # print(octahedral.group.classes[1].ops[0])
