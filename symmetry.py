@@ -3,6 +3,7 @@ import itertools
 import numpy
 import numpy.linalg
 import n_squared
+import O_h
 
 PRECISION=14 # numpy craps out at 16
 
@@ -131,17 +132,17 @@ class Group:
         # return { c.name:c.character_nsq(self.on(nsq_vec)) for c in self.classes }
         if not( irrep in self.irreps.keys() ):
             return 0;
-        return numpy.sum([ len(c) * c.character(irrep) * c.character_nsq(self.on(nsq_vec)) for c in self.classes ]) / len(self)
+        return numpy.sum([ len(c) * c.character(irrep) * c.character_nsq(O_h.group.on(nsq_vec)) for c in self.classes ]) / len(self)
 
     def nsq_projector(self, irrep, nsq_vec):
         if not( irrep in self.irreps.keys() ):
             return 0;
-        image = self.on(nsq_vec)
+        image = O_h.group.on(nsq_vec)
         return numpy.sum(numpy.array([ 1.0 / len(self) * c.character(irrep) * R.representation(image) for c in self.classes for R in c.ops ]) , axis=0)
 
     def nsq_states(self, irrep, nsq):
         primitives = n_squared.vectors(nsq)
-        images     = [ self.on(p) for p in primitives ]
+        images     = [ O_h.group.on(p) for p in primitives ]
         projectors = [ self.nsq_projector(irrep, i) for i in primitives ]
         eig_syss   = [ numpy.linalg.eig(p) for p in projectors ]
         return eig_syss
