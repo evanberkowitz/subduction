@@ -33,7 +33,7 @@ print(row_format.format("n^2", "degeneracy", "vector", "solid", *irreps))
 # # print( es )
 # print( numpy.around(numpy.array(es[1][0]), 14) )
 
-print( D4h.group )
-row_format = "{:>5}{:>12}{:>12} {:<30}" + "{:>5}" * len(D4h.group.irreps)
-print(row_format.format("n^2", "degeneracy", "vector", "solid", *(D4h.group.irreps.keys()) ))
-[ print(row_format.format(n, len(O_h.group.on(vec)), str(vec), n_squared.shape(vec), *[ (lambda d: "" if d==0 else d)(numpy.sum(numpy.array(D4h.group.nsq_degeneracy(irrep,vec).astype(int)))) for irrep in D4h.group.irreps.keys() ])) for n in range(24) if len(n_squared.vectors(n)) is not 0 for vec in n_squared.vectors(n) ]
+print( D_4h.group )
+row_format = "{:>5}{:>12}{:>12} {:<30}" + "{:>5}" * len(D_4h.group.irreps)
+print(row_format.format("n^2", "degeneracy", "vector", "solid", *(D_4h.group.irreps.keys()) ))
+[ print(row_format.format(n, len(O_h.group.on(vec)), str(vec), n_squared.shape(vec), *[ (lambda d: "" if d==0 else d)(numpy.sum(numpy.array(D_4h.group.nsq_degeneracy(irrep,vec).astype(int)))) for irrep in D_4h.group.irreps.keys() ])) for n in range(24) if len(n_squared.vectors(n)) is not 0 for vec in n_squared.vectors(n) ]
