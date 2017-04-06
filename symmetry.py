@@ -114,6 +114,8 @@ class Class:
         return len(self.ops)
     
     def __str__(self):
+        if len(self.ops) == 1:
+            return "Symmetry class "+self.name+", with "+str(len(self.ops))+" operation."
         return "Symmetry class "+self.name+", with "+str(len(self.ops))+" operations."
         
 class Group:
