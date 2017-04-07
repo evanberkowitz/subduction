@@ -25,7 +25,7 @@ import numpy
 #       +-----+
 
 # The first is the trivial one, the do-nothing operation.
-identity = symmetry.Class("E", [ symmetry.Reflection([+1,+1,+1]) ],
+identity = symmetry.Class("E", [ symmetry.identity ],
     {   "A1g":  +1,
         "A2g":  +1,
         "B1g":  +1,
@@ -111,11 +111,8 @@ faces = symmetry.Class("2C''_2",
 
 
 # We can do a point reflection around the origin:
-inv = symmetry.Reflection([-1,-1,-1])
 inversion = symmetry.Class("i",
-    [
-        inv
-    ],
+    [   symmetry.inversion  ],
     {   "A1g":  +1,
         "A2g":  +1,
         "B1g":  +1,
@@ -149,7 +146,7 @@ z_reflection = symmetry.Class(
 # We can reflect across the xy-plane and do a ±90 degree turn:
 z_face_90_inv = symmetry.Class(
     "2S_4",
-    [ rot * inv for rot in z_face_90.ops ],
+    [ rot * symmetry.inversion for rot in z_face_90.ops ],
     {   "A1g":  +1,
         "A2g":  +1,
         "B1g":  -1,
@@ -166,7 +163,7 @@ z_face_90_inv = symmetry.Class(
 # We can reflect across a plane that contains two opposite short edges:
 edges_inv = symmetry.Class(
     "2sigma_d",
-    [ rot * inv for rot in edges.ops ],
+    [ rot * symmetry.inversion for rot in edges.ops ],
     {   "A1g":  +1,
         "A2g":  -1,
         "B1g":  -1,
@@ -183,7 +180,7 @@ edges_inv = symmetry.Class(
 # We can reflect across the xz and yz planes:
 faces_inv = symmetry.Class(
     "2sigma_v",
-    [ rot * inv for rot in faces.ops ],
+    [ rot * symmetry.inversion for rot in faces.ops ],
     {   "A1g":  +1,
         "A2g":  -1,
         "B1g":  +1,

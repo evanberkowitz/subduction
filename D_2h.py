@@ -3,9 +3,11 @@ import numpy
 
 # D_2h is the symmetry of a rectangular prism where all three side lengths are different.
 
+# It is also the symmetry of a cube that has been squashed along a facial diagonal, which is made of two parallel rhombi joined by four congruent rectangles.
+# Such a shape is called a right rhombic prism, and can serve as a unit cell for the orthorhombic Bravais lattice.
 
 # The first is the trivial one, the do-nothing operation.
-identity = symmetry.Class("E", [ symmetry.Reflection([+1,+1,+1]) ],
+identity = symmetry.Class("E", [ symmetry.identity ],
     {   "Ag":   +1,
         "B1g":  +1,
         "B2g":  +1,
@@ -17,8 +19,7 @@ identity = symmetry.Class("E", [ symmetry.Reflection([+1,+1,+1]) ],
     } )
 
 # There is also the point-inversion.
-inv = symmetry.Reflection([-1,-1,-1])
-inversion = symmetry.Class("i", [ inv ],
+inversion = symmetry.Class("i", [ symmetry.inversion ],
     {   "Ag":   +1,
         "B1g":  +1,
         "B2g":  +1,

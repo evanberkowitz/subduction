@@ -31,6 +31,8 @@ class Operation:
     def __mul__(self, other):
         return Composition(self,other)
 
+identity=Operation()
+
 class Composition(Operation):
     
     def __init__(self, left, right):
@@ -84,6 +86,7 @@ class Reflection(Operation):
     def __str__(self):
         return "reflection given by "+str(self.axes)
 
+inversion = Reflection([-1,-1,-1])
 
 class Class:
     def __init__(self, name=None, ops=None, characters=None, desc=None):
