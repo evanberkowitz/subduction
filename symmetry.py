@@ -135,12 +135,12 @@ class Group:
         
     def nsq_degeneracy(self, irrep, nsq_vec):
         # return { c.name:c.character_nsq(self.on(nsq_vec)) for c in self.classes }
-        if not( irrep in self.irreps.keys() ):
+        if not( irrep in self.irreps ):
             return 0;
         return numpy.sum([ len(c) * c.character(irrep) * c.character_nsq(O_h.group.on(nsq_vec)) for c in self.classes ]) / len(self)
 
     def nsq_projector(self, irrep, nsq_vec):
-        if not( irrep in self.irreps.keys() ):
+        if not( irrep in self.irreps ):
             return 0;
         image = O_h.group.on(nsq_vec)
         return numpy.sum(numpy.array([ 1.0 / len(self) * c.character(irrep) * R.representation(image) for c in self.classes for R in c.ops ]) , axis=0)

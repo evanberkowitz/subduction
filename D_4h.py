@@ -200,5 +200,5 @@ group = symmetry.Group("D_4h",
         identity,   z_face_180,   z_face_90,        edges,      faces,
         inversion,  z_reflection, z_face_90_inv,    edges_inv,  faces_inv
     ],
-    { "A1g": 1, "A2g": 1, "B1g": 1, "B2g": 1, "Eg": 2, "A1u": 1, "A2u": 1, "B1u": 1, "B2u":1 , "Eu":2 },
+    [ "A1g", "A2g", "B1g", "B2g", "Eg", "A1u", "A2u", "B1u", "B2u", "Eu" ],
 )

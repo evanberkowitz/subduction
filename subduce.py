@@ -6,21 +6,11 @@ import O_h
 import D_4h
 import D_2h
 import block_diagonalize
-import Center_of_Mass
-
-boost = Center_of_Mass.Boost([1,1,1])
-print(boost.vector)
-print(boost.parity)
-
-[ print(n, boost.relative_momenta(n)) for n in boost.n_squareds(10) ]
-[ print(n, len(boost.relative_momenta(n))) for n in boost.n_squareds(10) ]
-
-# exit()
 
 def degeneracy_table(G, n):
     row_format = row_format = "{:>5}{:>12}{:>12} {:<30}" + "{:>5}" * len(G.irreps)
-    print(row_format.format("n^2", "degeneracy", "vector", "solid", *(G.irreps.keys()) ))
-    [ print(row_format.format(n, len(O_h.group.on(vec)), str(vec), n_squared.shape(vec), *[ (lambda d: "" if d==0 else d)(numpy.sum(numpy.array(G.nsq_degeneracy(irrep,vec).astype(int)))) for irrep in G.irreps.keys() ])) for n in range(n) if len(n_squared.vectors(n)) is not 0 for vec in n_squared.vectors(n) ]
+    print(row_format.format("n^2", "degeneracy", "vector", "solid", *(G.irreps) ))
+    [ print(row_format.format(n, len(O_h.group.on(vec)), str(vec), n_squared.shape(vec), *[ (lambda d: "" if d==0 else d)(numpy.sum(numpy.array(G.nsq_degeneracy(irrep,vec).astype(int)))) for irrep in G.irreps ])) for n in range(n) if len(n_squared.vectors(n)) is not 0 for vec in n_squared.vectors(n) ]
     return None
 
 nsq_max=24

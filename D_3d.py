@@ -87,5 +87,5 @@ group = symmetry.Group("D_2h",
         identity,   diagonal_rotation, edge_rotation,
         inversion,  diagonal_improper, edge_reflection
     ],
-    { "A1g": 1, "A2g": 1, "Eg": 2, "A1g":1, "A2u": 1, "Eu":2 },
+    [ "A1g", "A2g", "Eg", "A1g", "A2u", "Eu" ]
 )

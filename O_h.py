@@ -193,5 +193,5 @@ group = symmetry.Group("O_H",
         identity,   corner_rotation,   face_180_rotation, face_090_rotation,      edges_rotation,
         inversion,  corner_improper,   axis_reflection,    face_090_improper,      edges_improper
     ],
-    { "A1g": 1, "A2g": 1, "Eg": 2, "T1g": 3, "T2g": 3, "A1u": 1, "A2u": 1, "Eu": 2, "T1u":3 , "T2u":3 }
+    [ "A1g", "A2g", "Eg", "T1g", "T2g", "A1u", "A2u", "Eu", "T1u", "T2u" ]
 )
