@@ -17,9 +17,3 @@ def Ylm(l,m):
         angles=vec_to_angles(vec)
         return sph_harm(m,l,angles['azimuthal'],angles['polar'])
     return partial_wave
-    
-def nsq_character():
-    return None
-
-def nsq_degeneracy(group):
-    return { irrep: 1 for irrep in group.irreps.keys() }
