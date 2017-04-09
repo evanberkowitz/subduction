@@ -6,6 +6,16 @@ import O_h
 import D_4h
 import D_2h
 import block_diagonalize
+import cubic_volume
+
+boost = cubic_volume.boost([1,1,1])
+print(boost.vector)
+print(boost.parity)
+
+[ print(n, boost.relative_momenta(n)) for n in boost.n_squareds(5) ]
+[ print(n, len(boost.relative_momenta(n))) for n in boost.n_squareds(5) ]
+
+# exit()
 
 def degeneracy_table(G, n):
     row_format = row_format = "{:>5}{:>12}{:>12} {:<30}" + "{:>5}" * len(G.irreps)
