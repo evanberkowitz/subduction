@@ -53,7 +53,7 @@ z_face_180 = symmetry.Class("C_2",   [   symmetry.Rotation([0,0,1], numpy.pi)   
     } )
 
 # or we can rotate ±90-degrees
-z_face_90 = symmetry.Class("2C_4(z)",
+z_face_90 = symmetry.Class("C_4(z)",
     [   
         symmetry.Rotation([0,0,1], +numpy.pi/2),
         symmetry.Rotation([0,0,1], -numpy.pi/2),
@@ -70,9 +70,8 @@ z_face_90 = symmetry.Class("2C_4(z)",
         "Eu":    0
     } )
 
-# // TODO: it's important to make sure the characters are right.  I'm not 100% sure.  edges' characters may be switched with faces'.
 # We can skewer two opposing short edges and rotate by 180 degrees.
-edges = symmetry.Class("2C'_2",
+edges = symmetry.Class("C''_2",
     [
         symmetry.Rotation([+1,+1,0], numpy.pi),
         symmetry.Rotation([+1,-1,0], numpy.pi)
@@ -91,7 +90,7 @@ edges = symmetry.Class("2C'_2",
 )
 
 # We can skewer two opposing rectangular faces and rotate by 180 degrees (x- and y-axes)
-faces = symmetry.Class("2C''_2",
+faces = symmetry.Class("C'_2",
     [
         symmetry.Rotation([1,0,0], numpy.pi),
         symmetry.Rotation([0,1,0], numpy.pi)

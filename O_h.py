@@ -19,7 +19,7 @@ identity = symmetry.Class("E", [ symmetry.identity ],
 
 # We can skewer a cube through its inner diagonals.  There's three-fold symmetry around those axes.
 corner_rotation = symmetry.Class(
-    "8C_3",
+    "C_3",
     [
         symmetry.Rotation([+1,+1,+1], 2*numpy.pi/3),
         symmetry.Rotation([+1,+1,+1], 4*numpy.pi/3),
@@ -44,7 +44,7 @@ corner_rotation = symmetry.Class(
 
 # We can pick two opposite edges and skewer through their midpoints.  There's two-fold symmetry around those axes.
 edges_rotation = symmetry.Class(
-    "6C_2",
+    "C_2",
     [
         symmetry.Rotation([ 0,+1,+1], numpy.pi),
         symmetry.Rotation([ 0,-1,+1], numpy.pi),
@@ -67,7 +67,7 @@ edges_rotation = symmetry.Class(
 
 # We can skewer right through the faces and do 180-degree rotations...
 face_180_rotation = symmetry.Class(
-    "3C_2",
+    "C_2",
     [
         symmetry.Rotation([1,0,0], numpy.pi),
         symmetry.Rotation([0,1,0], numpy.pi),
@@ -87,7 +87,7 @@ face_180_rotation = symmetry.Class(
 
 # ... or 90-degree rotations
 face_090_rotation = symmetry.Class(
-    "6C_4",
+    "C_4",
     [
         symmetry.Rotation([1,0,0], +numpy.pi/2),
         symmetry.Rotation([1,0,0], -numpy.pi/2),
@@ -124,7 +124,7 @@ inversion = symmetry.Class("i", [ symmetry.inversion ],
 
 # We can put mirrors through the origin, parallel to the faces.
 # These are equivalent to doing a 180-degree face rotation after an inversion.
-axis_reflection = symmetry.Class("3sigma_h",
+axis_reflection = symmetry.Class("sigma_h",
     [
         symmetry.Reflection([-1,+1,+1]),
         symmetry.Reflection([+1,-1,+1]),
@@ -143,7 +143,7 @@ axis_reflection = symmetry.Class("3sigma_h",
     } )
 
 # We can put mirrors through opposite facial diagonals.
-edges_improper = symmetry.Class("6sigma_d",
+edges_improper = symmetry.Class("sigma_d",
     [ rot * symmetry.inversion for rot in edges_rotation.ops ],
     {   "A1g":  1,
         "A2g":  -1,
@@ -158,7 +158,7 @@ edges_improper = symmetry.Class("6sigma_d",
     } )
 
 # And we can combine a point reflection with the 90-degree facial rotations...
-face_090_improper = symmetry.Class("6S_4",
+face_090_improper = symmetry.Class("S_4",
     [ rot * symmetry.inversion for rot in face_090_rotation.ops ],
     {   "A1g":  1,
         "A2g":  -1,
@@ -173,7 +173,7 @@ face_090_improper = symmetry.Class("6S_4",
     } )
 
 # ... and corner rotations.
-corner_improper = symmetry.Class("8S_6",
+corner_improper = symmetry.Class("S_6",
     [ rot * symmetry.inversion for rot in corner_rotation.ops ],
     {   "A1g":  1,
         "A2g":  1,

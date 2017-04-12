@@ -27,7 +27,7 @@ inversion = symmetry.Class("i", [ symmetry.inversion ],
     })
 
 # There's a three-fold symmetry around the squashed axis:
-diagonal_rotation = symmetry.Class("2C_3", 
+diagonal_rotation = symmetry.Class("C_3", 
     [
         symmetry.Rotation([+1,+1,+1], +2*numpy.pi/3),
         symmetry.Rotation([+1,+1,+1], -2*numpy.pi/3)
@@ -42,7 +42,7 @@ diagonal_rotation = symmetry.Class("2C_3",
 )
 
 # There's the improper version of the same:
-diagonal_improper = symmetry.Class("2S_6",
+diagonal_improper = symmetry.Class("S_6",
     [ op * symmetry.inversion for op in diagonal_rotation.ops ],
     {   "A1g":  +1,
         "A2g":  +1,
@@ -54,7 +54,7 @@ diagonal_improper = symmetry.Class("2S_6",
 )
 
 # Finally, there are three very-hard-to-see 180-degree rotations that pierce the edges that don't touch the "squashed" corners...
-edge_rotation = symmetry.Class("3C'_2",
+edge_rotation = symmetry.Class("C'_2",
     [
         symmetry.Rotation([ +1,  0, -1], +numpy.pi),
         symmetry.Rotation([ +1, -1,  0], +numpy.pi),
@@ -70,7 +70,7 @@ edge_rotation = symmetry.Class("3C'_2",
 )
 
 # ... and associated reflections.
-edge_reflection = symmetry.Class("3sigma_d",
+edge_reflection = symmetry.Class("sigma_d",
     [   rot * symmetry.inversion for rot in edge_rotation.ops    ],
     {   "A1g":  +1,
         "A2g":  -1,
