@@ -163,3 +163,16 @@ class Group:
     def __len__(self):
         return numpy.sum([len(c) for c in self.classes])
         
+    def little(self, vec):
+        G = Group("Little group of "+self.name+" that leaves the vector "+str(vec)+" invariant.",
+            [c for c in [ Class(c.name, [ op for op in c.ops if (op.on(vec) == numpy.array(vec)).all() ]) for c in self.classes ] if len(c) is not 0], 
+            [ "Irreps?" ]
+        )
+        return G
+        
+    def relative(self, vec):
+        G = Group("Subgroup of "+self.name+" that leaves the axis parallel to "+str(vec)+" invariant.",
+            [c for c in [ Class(c.name, [ op for op in c.ops if (op.on(vec) == numpy.array(vec)).all() or (op.on(vec) == -numpy.array(vec)).all() ]) for c in self.classes ] if len(c) is not 0], 
+            [ "Irreps?" ]
+        )
+        return G
