@@ -143,7 +143,8 @@ class Group:
         if not( irrep in self.irreps ):
             return 0;
         image = O_h.group.on(nsq_vec)
-        return numpy.sum(numpy.array([ 1.0 / len(self) * c.character(irrep) * R.representation(image) for c in self.classes for R in c.ops ]) , axis=0)
+        dim_irrep = [ c.character(irrep) for c in self.classes if c.name is "E" ][0]
+        return numpy.sum(numpy.array([ dim_irrep / len(self) * c.character(irrep) * R.representation(image) for c in self.classes for R in c.ops ]) , axis=0)
 
     def nsq_states(self, irrep, nsq):
         primitives = n_squared.vectors(nsq)
