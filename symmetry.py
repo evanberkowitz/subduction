@@ -143,6 +143,8 @@ class Group:
         if not( irrep in self.irreps ):
             return 0;
         image = O_h.group.on(nsq_vec)
+
+        # // FIXME: this logic only works if the irreps are known---which isn't (currently) the case for the "little" and "relative" groups.
         dim_irrep = [ c.character(irrep) for c in self.classes if c.name is "E" ][0]
         return numpy.sum(numpy.array([ dim_irrep / len(self) * c.character(irrep) * R.representation(image) for c in self.classes for R in c.ops ]) , axis=0)
 
@@ -164,15 +166,21 @@ class Group:
         return numpy.sum([len(c) for c in self.classes])
         
     def little(self, vec):
-        G = Group("Little group of "+self.name+" that leaves the vector "+str(vec)+" invariant.",
-            [c for c in [ Class(c.name, [ op for op in c.ops if (op.on(vec) == numpy.array(vec)).all() ]) for c in self.classes ] if len(c) is not 0], 
-            [ "Irreps?" ]
-        )
+        if vec == [0,0,0]:
+            G=self
+        else:
+            G = Group("Little group of "+self.name+" that leaves the vector "+str(vec)+" invariant.",
+                [c for c in [ Class(c.name, [ op for op in c.ops if (op.on(vec) == numpy.array(vec)).all() ]) for c in self.classes ] if len(c) is not 0], 
+                [ "Irreps?" ]
+                )
         return G
         
     def relative(self, vec):
-        G = Group("Subgroup of "+self.name+" that leaves the axis parallel to "+str(vec)+" invariant.",
-            [c for c in [ Class(c.name, [ op for op in c.ops if (op.on(vec) == numpy.array(vec)).all() or (op.on(vec) == -numpy.array(vec)).all() ]) for c in self.classes ] if len(c) is not 0], 
-            [ "Irreps?" ]
-        )
+        if vec == [0, 0, 0]:
+            G=self
+        else:
+            G = Group("Subgroup of "+self.name+" that leaves the axis parallel to "+str(vec)+" invariant.",
+                [c for c in [ Class(c.name, [ op for op in c.ops if (op.on(vec) == numpy.array(vec)).all() or (op.on(vec) == -numpy.array(vec)).all() ]) for c in self.classes ] if len(c) is not 0], 
+                [ "Irreps?" ]
+                )
         return G
