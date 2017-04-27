@@ -100,3 +100,4 @@ print("so you see that mostly they're 0, but 4 are 1.  That jibes with the claim
 print("without further logic we can't say how to get the 'L_z' analog.")
 # print(evecs)
 
+print("// TODO: The ultimate goal is to be able to specify a spatial volume, a center of mass boost, and an nsquared and get, for each allowed irrep, a list of states made out of vectors and corresponding weights.")

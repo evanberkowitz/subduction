@@ -171,6 +171,7 @@ class Group:
         else:
             G = Group("Little group of "+self.name+" that leaves the vector "+str(vec)+" invariant.",
                 [c for c in [ Class(c.name, [ op for op in c.ops if (op.on(vec) == numpy.array(vec)).all() ]) for c in self.classes ] if len(c) is not 0], 
+                # // TODO: regroup the operations into appropriate classes, because classes may split.
                 [ "Irreps?" ]
                 )
         return G
@@ -184,3 +185,6 @@ class Group:
                 [ "Irreps?" ]
                 )
         return G
+        
+# // TODO: Write a function that can take a group and, based on its operations, identify it and thereby tell us which irreps there are, and the characters.
+# // TODO: how to compute the character of an operation or symmetry class?  Ideally this would be a method associated with the appropriate python class.
