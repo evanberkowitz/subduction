@@ -6,7 +6,7 @@ import O_h
 import D_4h
 import D_2h
 import block_diagonalize
-import cubic_volume
+import spatial
 
 def degeneracy_table(G, n):
     row_format = "{:>5}{:>12}{:>20} {:<25}" + "{:>5}" * len(G.irreps)
@@ -21,8 +21,9 @@ for G in [O_h]: #, D_4h, D_2h]: # // NOTE: I'm not sure the degeneracy table wor
     degeneracy_table(G.group, nsq_max)
 
 print("\n\n\n\n")
+cube=spatial.volume([16,16,16])
 nsq_max=12
-boost = cubic_volume.boost([1,1,1])
+boost = cube.boost([1,1,1])
 print("Now consider a cubic volume boosted by ",boost.vector)
 print("The parity of the boost is ",boost.parity)
 
@@ -37,7 +38,7 @@ print(row_format.format("n^2", "degeneracy", "vector"))
 
 print("\n\n\n\n")
 nsq_max=7
-boost = cubic_volume.boost([1,1,3])
+boost = cube.boost([1,1,3])
 print("Now consider a cubic volume boosted by ",boost.vector," instead.  This obviously has less symmetry than the previous boost.")
 print("The parity of the boost is ",boost.parity)
 print("Since the parity is the same, the n^2 values are the same as the [1,1,1] boost.")
@@ -53,7 +54,7 @@ print(row_format.format("n^2", "degeneracy", "vector"))
 
 print("\n\n\n\n")
 nsq_max=7
-boost = cubic_volume.boost([1,1,2])
+boost = cube.boost([1,1,2])
 print("Now consider a cubic volume boosted by ",boost.vector," instead.")
 print("The parity of the boost is ",boost.parity)
 print("Since the parity is different, the n^2 values are different.")
@@ -68,7 +69,7 @@ print(row_format.format("n^2", "degeneracy", "vector"))
 
 print("\n\n\n\n")
 nsq_max=7
-boost = cubic_volume.boost([2,2,2])
+boost = cube.boost([2,2,2])
 print("Now consider a cubic volume boosted by ",boost.vector,".")
 print("The parity of the boost is ",boost.parity)
 print("Since the parity matches that of [0,0,0], the n^2 values will be the same---integers.")
