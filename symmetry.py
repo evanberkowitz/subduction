@@ -2,8 +2,6 @@ from __future__ import print_function
 import itertools
 import numpy
 import numpy.linalg
-import n_squared
-import O_h
 
 PRECISION=14 # numpy craps out at 16
 
@@ -133,26 +131,29 @@ class Group:
     def on(self, vec):
         return union([ op.on(vec) for c in self.classes for op in c.ops ])
         
+    def orbit(self, vec):
+        return self.on(vec)
+        
     def nsq_degeneracy(self, irrep, nsq_vec):
         # return { c.name:c.character_nsq(self.on(nsq_vec)) for c in self.classes }
         if not( irrep in self.irreps ):
             return 0;
-        return numpy.sum([ len(c) * c.character(irrep) * c.character_nsq(O_h.group.on(nsq_vec)) for c in self.classes ]) / len(self)
+        return numpy.sum([ len(c) * c.character(irrep) * c.character_nsq(self.on(nsq_vec)) for c in self.classes ]) / len(self)
 
     def nsq_projector(self, irrep, nsq_vec):
         if not( irrep in self.irreps ):
             return 0;
-        image = O_h.group.on(nsq_vec)
+        orbit = self.on(nsq_vec)
 
         # // FIXME: this logic only works if the irreps are known---which isn't (currently) the case for the "little" and "relative" groups.
         dim_irrep = [ c.character(irrep) for c in self.classes if c.name is "E" ][0]
-        return numpy.sum(numpy.array([ dim_irrep / len(self) * c.character(irrep) * R.representation(image) for c in self.classes for R in c.ops ]) , axis=0)
+        return numpy.sum(numpy.array([ dim_irrep / len(self) * c.character(irrep) * R.representation(orbit) for c in self.classes for R in c.ops ]) , axis=0)
 
-    def nsq_states(self, irrep, nsq):
-        primitives = n_squared.vectors(nsq)
-        images     = [ O_h.group.on(p) for p in primitives ]
-        projectors = [ self.nsq_projector(irrep, i) for i in primitives ]
-        eig_syss   = [ numpy.linalg.eig(p) for p in projectors ]
+    def states(self, irrep, nsq_primitive):
+        # // TODO: what am I doing?
+        # // I think I want this function to be the "final" function that gives me lists of pair of vectors (states and weights).
+        projector  = self.nsq_projector(irrep, nsq_primitive)
+        eig_syss   = numpy.linalg.eig(projector)
         return eig_syss
         # evals      = numpy.around(eig_syss[:][0],PRECISION)
         # evecs      = numpy.around(eig_syss[:][1],PRECISION)
