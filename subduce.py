@@ -1,7 +1,6 @@
 import os, sys
 import argparse
 import numpy
-import n_squared
 import O_h
 import D_4h
 import D_2h
@@ -104,7 +103,7 @@ print("\n\n\n\n")
 print("We can look at a particularly tricky case---when there's more than one copy of an irrep for a given n^2")
 print("For example, consider the Eg representation of O_H with n^2=5.")
 print("The projector to that irrep, on the basis of the n^2=5 vectors is")
-mat=O_h.group.nsq_projector("Eg", n_squared.vectors(5)[0])
+mat=O_h.group.nsq_projector("Eg", cube.boost([0,0,0]).relative_momenta(5)[0])
 print(mat)
 (evals, evecs) = numpy.linalg.eig(mat)
 print("The eigenvalues of that matrix are")
