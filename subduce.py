@@ -8,17 +8,31 @@ import D_2h
 import block_diagonalize
 import spatial
 
-def degeneracy_table(G, n):
-    row_format = "{:>5}{:>12}{:>20} {:<25}" + "{:>5}" * len(G.irreps)
-    print(row_format.format("n^2", "degeneracy", "vector", "solid", *(G.irreps) ))
-    [ print(row_format.format(n, len(O_h.group.on(vec)), str(vec), n_squared.shape(vec), *[ (lambda d: "" if d==0 else d)(numpy.sum(numpy.array(G.nsq_degeneracy(irrep,vec).astype(int)))) for irrep in G.irreps ])) for n in range(n) if len(n_squared.vectors(n)) is not 0 for vec in n_squared.vectors(n) ]
+cube=spatial.volume([16,16,16])
+
+# Here's a now-correct degeneracy table.
+# // TODO: simplify degeneracy_table
+# It would be better if rather than having to pass the group and the boost separately, one could just pass the boost.
+# What stands in the way is that currently arbitrary volumes and boosts use the Group.relative procedure to construct subgroups, and this doesn't have logic to deduce what the available irreps and symmetry classes are and what the character tables should be.  Those are needed to automatically determine the group.
+def degeneracy_table(G, boost, n):
+    row_format = "{:>5}{:>12}{:>20} " + "{:>5}" * len(G.irreps)
+    print(row_format.format("n^2", "degeneracy", "vector", *(G.irreps) ))
+    [ print(row_format.format(n, len(G.on(vec)), str(vec), *[ (lambda d: "" if d==0 else d)(numpy.sum(numpy.array(G.nsq_degeneracy(irrep,vec).astype(int)))) for irrep in G.irreps ])) for n in range(n) if len(boost.relative_momenta(n)) is not 0 for vec in boost.relative_momenta(n) ]
     return None
 
-# Reproduce Luu & Savage:
-nsq_max=24
-for G in [O_h]: #, D_4h, D_2h]: # // NOTE: I'm not sure the degeneracy table works for D_4h and D_2h (but I think it does).
-    print( G.group )
-    degeneracy_table(G.group, nsq_max)
+# Reproduce Luu & Savage
+print( O_h.group )
+degeneracy_table(O_h.group,  cube.boost([0,0,0]), 24)
+
+# Complete D_4h table
+print( D_4h.group )
+degeneracy_table(D_4h.group, spatial.volume([16,16,32]).boost([0,0,0]), 24)
+
+print( D_2h.group )
+degeneracy_table(D_2h.group, spatial.volume([16,32,48]).boost([0,0,0]), 24)
+
+# print("\n\n\n... and exit early.")
+# exit()
 
 print("\n\n\n\n")
 cube=spatial.volume([16,16,16])
