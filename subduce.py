@@ -25,10 +25,31 @@ degeneracy_table(O_h.group,  cube.boost([0,0,0]), 24)
 
 # Complete D_4h table
 print( D_4h.group )
+#  One can start with an anisotropic volume...
 degeneracy_table(D_4h.group, spatial.volume([16,16,32]).boost([0,0,0]), 24)
+# or, instead, one might take a cubic volume and do a parity-even boost along the z-axis
+# The z-axis is special because the D_4h module assumes the z axis is the principal axis.
+# degeneracy_table(D_4h.group, cube.boost([0,0,2]), 24) # This gives the same degeneracy table!
 
 print( D_2h.group )
+# I think there may be a bug, because these two:
 degeneracy_table(D_2h.group, spatial.volume([16,32,48]).boost([0,0,0]), 24)
+# degeneracy_table(D_2h.group, cube.boost([0,2,2]), 24)
+# produce different degeneracy tables, sort of.  The former produces, for nsq=2,
+    # 5           4   [-2.0, -1.0, 0.0]     1    1                        1    1
+    # 5           4   [-2.0, 0.0, -1.0]     1         1              1         1
+    # 5           4   [-1.0, -2.0, 0.0]     1    1                        1    1
+    # 5           4   [-1.0, 0.0, -2.0]     1         1              1         1
+    # 5           4   [0.0, -2.0, -1.0]     1              1         1    1
+    # 5           4   [0.0, -1.0, -2.0]     1              1         1    1
+# while the latter produces
+    # 5           4   [-2.0, -1.0, 0.0]     1    1                        1    1
+    # 5           4   [-1.0, -2.0, 0.0]     1    1                        1    1
+    # 5           4   [0.0, -2.0, -1.0]     1              1         1    1
+    # 5           4    [0.0, -2.0, 1.0]     1              1         1    1
+# I think the first is correct, because O_h n^2 = 5 has degeneracy 24 = 6 * 4 = (first result)
+# Somehow we're missing the vectors with 0 in the y entry.
+# // FIXME: Sort out this mysterious D_2h mismatch.
 
 # print("\n\n\n... and exit early.")
 # exit()
